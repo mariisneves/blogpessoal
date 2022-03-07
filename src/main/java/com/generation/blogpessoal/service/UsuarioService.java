@@ -111,6 +111,23 @@ public class UsuarioService {
 		return Optional.empty();
 
 	}
+	
+	public Optional<Usuario> atualizarUsuario2(Usuario usuario) {
+
+		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
+			if (usuarioRepository.findByUsuario(usuario.getUsuario()).isEmpty()) {
+				usuario.setSenha(criptografarSenha(usuario.getSenha()));
+			return Optional.ofNullable(usuarioRepository.save(usuario));
+			} else if (usuarioRepository.findByNomeAndUsuario(usuario.getNome(), usuario.getUsuario()).isPresent()) {
+				usuario.setSenha(criptografarSenha(usuario.getSenha()));
+				return Optional.ofNullable(usuarioRepository.save(usuario));
+			} else if (usuarioRepository.findByIdAndUsuario(usuario.getId(),usuario.getUsuario()).isPresent()) {
+				usuario.setSenha(criptografarSenha(usuario.getSenha()));
+				return Optional.ofNullable(usuarioRepository.save(usuario));
+			}
+		}
+		return Optional.empty();
+}
 
 	/**
 	 * A principal função do método autenticarUsuario, que é executado no endpoint
