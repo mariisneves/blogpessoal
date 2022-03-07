@@ -82,52 +82,42 @@ public class UsuarioService {
 	 * retorna false.
 	 * 
 	 */
+//	SOLUÇÃO PROFESSOR
+//	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
+//		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
+//			/**
+//			 * Cria um Objeto Optional com o resultado do método findById
+//			 */
+//			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
+//			/**
+//			 * Se o Usuário existir no Banco de dados e o Id do Usuário encontrado no Banco for 
+//			 * diferente do usuário do Id do Usuário enviado na requisição, a Atualização dos 
+//			 * dados do Usuário não pode ser realizada.
+//			 */
+//			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
+//				throw new ResponseStatusException( //throw -> lança uma exceção, um erro
+//						HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
+//
+//			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+//			return Optional.ofNullable(usuarioRepository.save(usuario));
+//		}
+//		return Optional.empty();
+//	}	
+
+	//DESAFIO
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
-
-		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
-
-			/**
-			 * Se o Usuário existir no Banco de Dados, a senha será criptografada através do
-			 * Método criptografarSenha.
-			 */
-			usuario.setSenha(criptografarSenha(usuario.getSenha()));
-
-			/**
-			 * Assim como na Expressão Lambda, o resultado do método save será retornado
-			 * dentro de um Optional, com o Usuario persistido no Banco de Dados ou um
-			 * Optional vazio, caso aconteça algum erro.
-			 * 
-			 * ofNullable​ -> Se um valor estiver presente, retorna um Optional com o valor,
-			 * caso contrário, retorna um Optional vazio.
-			 */
-			return Optional.ofNullable(usuarioRepository.save(usuario));
-
-		}
-
-		/**
-		 * empty -> Retorna uma instância de Optional vazia, caso o usuário não seja
-		 * encontrado.
-		 */
-		return Optional.empty();
-
-	}
-	
-	public Optional<Usuario> atualizarUsuario2(Usuario usuario) {
 
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 			if (usuarioRepository.findByUsuario(usuario.getUsuario()).isEmpty()) {
 				usuario.setSenha(criptografarSenha(usuario.getSenha()));
-			return Optional.ofNullable(usuarioRepository.save(usuario));
-			} else if (usuarioRepository.findByNomeAndUsuario(usuario.getNome(), usuario.getUsuario()).isPresent()) {
-				usuario.setSenha(criptografarSenha(usuario.getSenha()));
 				return Optional.ofNullable(usuarioRepository.save(usuario));
-			} else if (usuarioRepository.findByIdAndUsuario(usuario.getId(),usuario.getUsuario()).isPresent()) {
+			} else if (usuarioRepository.findByIdAndUsuario(usuario.getId(), usuario.getUsuario()).isPresent()) {
 				usuario.setSenha(criptografarSenha(usuario.getSenha()));
 				return Optional.ofNullable(usuarioRepository.save(usuario));
 			}
 		}
 		return Optional.empty();
-}
+	}
 
 	/**
 	 * A principal função do método autenticarUsuario, que é executado no endpoint

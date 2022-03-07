@@ -41,6 +41,7 @@ public class UsuarioController {
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 	
+//	SOLUÇÃO DO PROFESSOR
 //	@PutMapping("/atualizar")
 //	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario){
 //		return usuarioService.atualizarUsuario(usuario)
@@ -51,7 +52,7 @@ public class UsuarioController {
 	//DESAFIO
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario){
-		return usuarioService.atualizarUsuario2(usuario)
+		return usuarioService.atualizarUsuario(usuario)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
