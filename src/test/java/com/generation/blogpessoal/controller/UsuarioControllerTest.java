@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.generation.blogpessoal.model.Usuario;
+import com.generation.blogpessoal.model.UsuarioLogin;
 import com.generation.blogpessoal.repository.UsuarioRepository;
 import com.generation.blogpessoal.service.UsuarioService;
 
@@ -132,21 +133,35 @@ public class UsuarioControllerTest {
 	@DisplayName("Retornar Um Id")
 	public void deveRetornarUmId() {
 		
-//		Optional<Usuario> usuarioCreate = usuarioService.cadastrarUsuario(new Usuario(0L, 
-//		"Mariana Neves", "mariana_neves@email.com.br", "987654321", 
-//		"https://64.media.tumblr.com/14e40a217033af94fdb0d4dc2faac76c/bf58ca8058c6be07-af/s400x600/0834bff9aa2bc81f2819531a74df41ed4390000e.jpg"));
+		Optional<Usuario> usuarioCreate = usuarioService.cadastrarUsuario(new Usuario(0L, 
+		"Mariana Neves", "mariana_neves@email.com.br", "987654321", 
+		"https://64.media.tumblr.com/14e40a217033af94fdb0d4dc2faac76c/bf58ca8058c6be07-af/s400x600/0834bff9aa2bc81f2819531a74df41ed4390000e.jpg"));
 
-		usuarioService.cadastrarUsuario(new Usuario(0L, 
-				"Mariana Neves", "mariana_neves@email.com.br", "987654321", 
-				"https://64.media.tumblr.com/14e40a217033af94fdb0d4dc2faac76c/bf58ca8058c6be07-af/s400x600/0834bff9aa2bc81f2819531a74df41ed4390000e.jpg"));
-		
 		ResponseEntity<String> resposta = testRestTemplate
 				.withBasicAuth("root", "root")
-				.exchange("/usuarios/1", HttpMethod.GET, null, String.class);
+				.exchange("/usuarios/" + usuarioCreate.get().getId(), HttpMethod.GET, null, String.class);
 		
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 	
-
+	//DESAFIO 2
+	@Test
+	@Order(6)
+	@DisplayName("Logar um usuário")
+	public void deveLogarUmUsuario() {
+		
+		usuarioService.cadastrarUsuario(new Usuario(0L, 
+		"Mariana Alves", "mariana_alves@email.com.br", "987654321", 
+		"https://64.media.tumblr.com/14e40a217033af94fdb0d4dc2faac76c/bf58ca8058c6be07-af/s400x600/0834bff9aa2bc81f2819531a74df41ed4390000e.jpg"));
+	
+		HttpEntity<UsuarioLogin> corpoRequisicao = new HttpEntity<UsuarioLogin>(new UsuarioLogin(0L,
+		"", "mariana_alves@email.com.br", "987654321", "", ""));
+		
+		ResponseEntity<UsuarioLogin> corpoResposta = testRestTemplate
+				.exchange("/usuarios/logar", HttpMethod.POST, corpoRequisicao, UsuarioLogin.class);
+		
+		assertEquals(HttpStatus.OK, corpoResposta.getStatusCode());
+		
+	}
 
 }
