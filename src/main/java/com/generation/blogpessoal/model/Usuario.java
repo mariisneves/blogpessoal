@@ -17,29 +17,44 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table (name="tb_usuarios")
+@Table(name = "tb_usuarios")
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull(message="O campo nome é obrigatório.")
+
+	@NotNull(message = "O campo nome é obrigatório.")
 	private String nome;
-	
-	@NotNull(message="O campo usuário é obrigatório.")
-	@Email(message="O campo usuário deve ser preenchido com um email.")
+
+	@NotNull(message = "O campo usuário é obrigatório.")
+	@Email(message = "O campo usuário deve ser preenchido com um email.")
 	private String usuario;
-	
-	@NotBlank(message="O campo senha é obrigatório.")
-	@Size(min = 8, message="O campo senha deve ter no mínimo 8 caracteres.")
+
+	@NotBlank(message = "O campo senha é obrigatório.")
+	@Size(min = 8, message = "O campo senha deve ter no mínimo 8 caracteres.")
 	private String senha;
-	
+
 	private String foto;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuarios")
 	private List<Postagem> postagem;
+
+	//Método construtor com parâmetros
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+	
+	//Método construtor sem parâmetros / vazio
+	public Usuario() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -88,7 +103,5 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
-	
 
 }

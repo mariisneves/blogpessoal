@@ -13,6 +13,22 @@ public class UsuarioLogin {
 	private String foto;
 
 	private String token;
+	
+	//PRIMEIRO CONSTRUTOR
+	public UsuarioLogin(Long id, String nome, String usuario, String senha, String foto, String token) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+		this.token = token;
+	}
+	
+	//SEGUNDO CONSTRUTOR
+		public UsuarioLogin() {
+			
+		}
 
 	public Long getId() {
 		return id;
