@@ -41,7 +41,7 @@ public class Usuario {
 	@JsonIgnoreProperties("usuarios")
 	private List<Postagem> postagem;
 
-	//Método construtor com parâmetros
+	//PRIMEIRO CONSTRUTOR
 	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
 		super();
 		this.id = id;
@@ -51,7 +51,7 @@ public class Usuario {
 		this.foto = foto;
 	}
 	
-	//Método construtor sem parâmetros / vazio
+	//SEGUNDO CONSTRUTOR
 	public Usuario() {
 		
 	}

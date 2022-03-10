@@ -40,23 +40,12 @@ public class UsuarioController {
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 	
-//	SOLUÇÃO DO PROFESSOR
-//	@PutMapping("/atualizar")
-//	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario){
-//		return usuarioService.atualizarUsuario(usuario)
-//				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
-//				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-//	}
-	
-	//DESAFIO
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario){
 		return usuarioService.atualizarUsuario(usuario)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
-	
-	
 	
 	@PostMapping("/logar")
 	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> usuarioLogin){
@@ -76,14 +65,5 @@ public class UsuarioController {
 				.map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<Object> deleteUsuario (@PathVariable Long id) {
-//		return usuarioRepository.findById(id)
-//				.map(resposta -> {
-//					usuarioRepository.deleteById(id);
-//					return ResponseEntity.noContent().build();
-//				}) .orElse(ResponseEntity.notFound().build());
-//	}
 	
 }

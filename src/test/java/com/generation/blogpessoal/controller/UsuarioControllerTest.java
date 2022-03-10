@@ -76,9 +76,6 @@ public class UsuarioControllerTest {
 			.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, corpoResposta.getStatusCode());
-		//é verdade que o método não me deixa salvar usuario duplicado?
-		//o teste dá verdadeiro se retornar o bad request
-	
 	}
 	
 	@Test
@@ -90,8 +87,7 @@ public class UsuarioControllerTest {
 			"Juliana Andrews", "juliana_andrews@email.com.br", 
 			"juliana123", "https://i.imgur.com/yDRVeK7.jpg"));
 
-		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(), 
-				//vai pegar o id do usuario cadastrado pra conseguir atualizar
+		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(),
 			"Juliana Andrews Ramos", "juliana_ramos@email.com.br", 
 			"juliana123", "https://i.imgur.com/yDRVeK7.jpg");
 		
@@ -100,7 +96,6 @@ public class UsuarioControllerTest {
 		ResponseEntity<Usuario> corpoResposta = testRestTemplate
 			.withBasicAuth("root", "root") //login pra conseguir o acesso
 			.exchange("/usuarios/atualizar", HttpMethod.PUT, corpoRequisicao, Usuario.class);
-			//				caminho			|	  verbo		|	requisição	| classe usuario
 
 		assertEquals(HttpStatus.OK, corpoResposta.getStatusCode());
 		assertEquals(usuarioUpdate.getNome(), corpoResposta.getBody().getNome());
@@ -127,7 +122,6 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 	
-	//DESAFIO 1
 	@Test
 	@Order(5)
 	@DisplayName("Retornar Um Id")
@@ -144,7 +138,6 @@ public class UsuarioControllerTest {
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 	
-	//DESAFIO 2
 	@Test
 	@Order(6)
 	@DisplayName("Logar um usuário")

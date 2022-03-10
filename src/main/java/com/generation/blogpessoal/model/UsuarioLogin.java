@@ -26,9 +26,9 @@ public class UsuarioLogin {
 	}
 	
 	//SEGUNDO CONSTRUTOR
-		public UsuarioLogin() {
-			
-		}
+	public UsuarioLogin() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -77,7 +77,5 @@ public class UsuarioLogin {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
 
 }

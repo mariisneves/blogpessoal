@@ -29,10 +29,9 @@ public class TemaController {
 	@Autowired
 	private TemaRepository temaRepository;
 
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Tema>> getAll() {
 		return ResponseEntity.ok(temaRepository.findAll());
-
 	}
 
 	@GetMapping("/{id}")
@@ -48,7 +47,11 @@ public class TemaController {
 
 	@PostMapping
 	public ResponseEntity<Tema> postTema(@Valid @RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(temaRepository.save(tema));
+		if (temaRepository.existsByDescricaoIgnoreCase(tema.getDescricao())) {
+			return new ResponseEntity("Este tema já existe.", HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(temaRepository.save(tema));
 	}
 
 	@PutMapping
@@ -57,12 +60,13 @@ public class TemaController {
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(temaRepository.save(tema)))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteTema(@PathVariable Long id) {
 		return temaRepository.findById(id).map(resposta -> {
-			temaRepository.deleteById(id); return ResponseEntity.noContent().build();
-		}) .orElse(ResponseEntity.notFound().build());
+			temaRepository.deleteById(id);
+			return ResponseEntity.noContent().build();
+		}).orElse(ResponseEntity.notFound().build());
 	}
 
 }
