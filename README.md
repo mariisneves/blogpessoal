@@ -17,4 +17,4 @@ LinkedIn: <br />
 https://www.linkedin.com/in/mariisneves/ 
 <p> <p />
 E-mail: <br />
-mariana.aneves@outlook.com
+contato.mariananeves@outlook.com
